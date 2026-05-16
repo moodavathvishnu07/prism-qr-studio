@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Gen Pro | Prism Design Studio</title>
+    <meta name="description" content="Professional-grade QR design studio. Precision generation with the Prism Design System.">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <nav class="nav">
+        <div class="container nav-content">
+            <a href="#" class="logo" style="display: flex; align-items: center; gap: 0.85rem; text-decoration: none;">
+                <div class="logo-icon" style="width: 28px; height: 28px; border: 3px solid white; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 4px;">
+                    <div style="width: 10px; height: 10px; background: white; border-radius: 50%;"></div>
+                </div>
+                <div style="display: flex; flex-direction: column; line-height: 1;">
+                    <span style="font-size: 1.05rem; font-weight: 900; letter-spacing: 0.2em; color: white;">QR GEN</span>
+                    <span style="font-size: 0.55rem; font-weight: 800; letter-spacing: 0.6em; color: white; opacity: 0.5; margin-top: 0.1rem;">P R O</span>
+                </div>
+            </a>
+            <div class="nav-actions">
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Side-by-Side Workspace -->
+        <section class="workspace-area">
+            <div class="container workspace-flex">
+                <!-- Left: Templates Sidebar -->
+                <aside class="templates-sidebar">
+                    <div class="sidebar-header">
+                        <span class="feature-tag">Presets</span>
+                        <h3>Designer Gallery</h3>
+                    </div>
+                    <div class="templates-grid" id="templates-grid">
+                        <!-- Injected by JS -->
+                    </div>
+                </aside>
+
+                <!-- Right: Studio v2.0 -->
+                <div class="studio-content">
+                    <div class="studio-header-card shimmer">
+                        <span class="feature-tag">System 2.1</span>
+                        <h2 class="gradient-text">Design Studio</h2>
+                    </div>
+
+                    <div class="studio-main">
+                        <!-- Configurator -->
+                        <div class="studio-card shimmer">
+                            <div class="input-group">
+                                <label class="label">Destination Content</label>
+                                <textarea id="qr-input" class="textarea" placeholder="Enter URL, Email, or Text..."></textarea>
+                            </div>
+
+                            <div class="controls-row">
+                                <div class="control-box">
+                                    <label class="label">Pattern</label>
+                                    <select id="dot-style">
+                                        <option value="dots">Organic Dots</option>
+                                        <option value="rounded">Soft Rounded</option>
+                                        <option value="square">Technical Square</option>
+                                        <option value="classy">Lux Classy</option>
+                                    </select>
+                                </div>
+                                <div class="control-box">
+                                    <label class="label">Geometry</label>
+                                    <select id="corner-style">
+                                        <option value="dot">Soft Corner</option>
+                                        <option value="extra-rounded">Deep Round</option>
+                                        <option value="square">Sharp Edge</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="controls-row">
+                                <div class="control-box">
+                                    <label class="label">Primary Color</label>
+                                    <input type="color" id="fg-color" value="#00D1FF" hidden>
+                                    <div class="color-swatch" id="fg-swatch" style="background: #00D1FF;">#00D1FF</div>
+                                </div>
+                                <div class="control-box">
+                                    <label class="label">Background</label>
+                                    <input type="color" id="bg-color" value="#FFFFFF" hidden>
+                                    <div class="color-swatch" id="bg-swatch" style="background: #FFFFFF; color: #000;">#FFFFFF</div>
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <label class="label">Smart Branding</label>
+                                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                                    <button class="btn btn-outline brand-btn active" data-brand="none">None</button>
+                                    <button class="btn btn-outline brand-btn" data-brand="instagram">Instagram</button>
+                                    <button class="btn btn-outline brand-btn" data-brand="twitter">X</button>
+                                    <button class="btn btn-outline brand-btn" data-brand="linkedin">LinkedIn</button>
+                                    <button class="btn btn-outline brand-btn" data-brand="youtube">YouTube</button>
+                                    <button class="btn btn-outline brand-btn" data-brand="upi">UPI / Bank</button>
+                                    
+                                    <div style="width: 100%; margin-top: 1rem; display: flex; flex-direction: column; gap: 0.8rem;">
+                                        <label class="label" style="display: flex; align-items: center; gap: 0.6rem; margin: 0; cursor: pointer; font-size: 0.7rem; opacity: 0.7; background: rgba(255,255,255,0.03); padding: 0.6rem; border-radius: var(--radius-lg); border: 1px solid var(--border);">
+                                            <input type="checkbox" id="smart-upi-branding" checked style="width: 14px; height: 14px; accent-color: var(--accent-blue);"> Auto-Brand Detection
+                                        </label>
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                                            <input type="file" id="logo-upload" accept="image/png, image/jpeg" hidden>
+                                            <button id="upload-btn" class="btn btn-outline" style="border-style: dashed; padding: 0.75rem; font-size: 0.75rem;">
+                                                <span>+ Custom</span>
+                                            </button>
+                                            <button id="gallery-btn" class="btn btn-outline" style="background: rgba(0,209,255,0.1); border-color: rgba(0,209,255,0.2); padding: 0.75rem; font-size: 0.75rem;">
+                                                <span><i class="fas fa-images"></i> Gallery</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Logo Gallery Modal -->
+                        <div id="gallery-modal" class="modal" style="display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); align-items: center; justify-content: center; padding: 2rem;">
+                            <div class="modal-content glass" style="width: 100%; max-width: 600px; padding: 2.5rem; border-radius: var(--radius-2xl); border: 1px solid var(--border); position: relative;">
+                                <button id="close-gallery" style="position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: white; opacity: 0.5; cursor: pointer; font-size: 1.2rem;"><i class="fas fa-times"></i></button>
+                                <h2 style="margin-bottom: 2rem; font-weight: 800; letter-spacing: -0.02em;">Brand Asset Gallery</h2>
+                                <div id="logo-gallery-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 1.5rem; max-height: 400px; overflow-y: auto; padding-right: 1rem;">
+                                    <!-- Logos injected by JS -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Live View & All Controls -->
+                        <div class="preview-container">
+                            <div class="qr-frame">
+                                <div id="qr-header-label" style="margin-bottom: 1rem; display: none; align-items: center; justify-content: center; gap: 0.6rem;">
+                                    <img class="label-icon" src="" style="width: 22px; height: 22px; display: none;">
+                                    <span class="label-text" style="font-weight: 800; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.08em;">Scan to Pay</span>
+                                </div>
+                                <div id="qr-canvas"></div>
+                                <div id="qr-footer-label" style="margin-top: 1rem; display: none; align-items: center; justify-content: center; gap: 0.6rem;">
+                                    <img class="label-icon" src="" style="width: 22px; height: 22px; display: none;">
+                <!-- Right: Main Studio -->
+                <div class="studio-main">
+                    <div class="studio-header-card">
+                        <div class="studio-title-group">
+                            <span class="feature-tag">Studio</span>
+                            <h2>Design Workspace</h2>
+                        </div>
+                        <div class="studio-actions">
+                            <button id="download-png" class="btn btn-primary">Download PNG</button>
+                            <div class="dropdown">
+                                <button class="btn btn-outline" style="min-width: 40px; padding: 0.5rem;"><i class="fas fa-chevron-down"></i></button>
+                                <div class="dropdown-content">
+                                    <button id="download-svg">Export SVG</button>
+                                    <button id="download-pdf">Save PDF</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="studio-content">
+                        <div class="preview-panel">
+                            <div class="qr-frame prism-glow">
+                                <div id="qr-header-label" style="margin-bottom: 1rem; display: none; align-items: center; justify-content: center; gap: 0.6rem;">
+                                    <img class="label-icon" src="" style="width: 22px; height: 22px; display: none;">
+                                    <span class="label-text" style="font-weight: 800; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.08em;">Scan to Pay</span>
+                                </div>
+                                <div id="qr-canvas"></div>
+                                <div id="qr-footer-label" style="margin-top: 1rem; display: none; align-items: center; justify-content: center; gap: 0.6rem;">
+                                    <img class="label-icon" src="" style="width: 22px; height: 22px; display: none;">
+                                    <span class="label-text" style="font-weight: 800; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.08em;">Scan to Pay</span>
+                                </div>
+                            </div>
+                            
+                            <div class="download-bar">
+                                <button id="dl-png" class="btn btn-primary">Download PNG</button>
+                                <button id="dl-svg" class="btn btn-outline">SVG</button>
+                            </div>
+                        </div>
+
+                        <div class="controls-panel">
+                            <!-- Input Card -->
+                            <div class="studio-card">
+                                <div class="input-group">
+                                    <label class="label">Content Source</label>
+                                    <textarea id="qr-input" class="textarea" placeholder="Paste your link or type here..."></textarea>
+                                </div>
+                                
+                                <div class="input-group" style="margin-top: 1.5rem;">
+                                    <label class="label">Brand Intelligence</label>
+                                    <div class="grid-2" style="gap: 1.5rem;">
+                                        <div class="color-picker-group">
+                                            <label class="label" style="font-size: 0.6rem; opacity: 0.6; margin-bottom: 0.4rem; letter-spacing: 0.05em;">QR Color</label>
+                                            <div id="fg-swatch" class="color-swatch">
+                                                <input type="color" id="fg-color" value="#ffffff" style="visibility: hidden; width: 0; height: 0;">
+                                                <span>#FFFFFF</span>
+                                            </div>
+                                        </div>
+                                        <div class="color-picker-group">
+                                            <label class="label" style="font-size: 0.6rem; opacity: 0.6; margin-bottom: 0.4rem; letter-spacing: 0.05em;">Background</label>
+                                            <div id="bg-swatch" class="color-swatch" style="background: rgba(255,255,255,0.05); color: white; border: 1px solid var(--border);">
+                                                <input type="color" id="bg-color" value="#000000" style="visibility: hidden; width: 0; height: 0;">
+                                                <span>#000000</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="width: 100%; margin-top: 1rem; display: flex; flex-direction: column; gap: 0.8rem;">
+                                        <label class="label" style="display: flex; align-items: center; gap: 0.6rem; margin: 0; cursor: pointer; font-size: 0.7rem; opacity: 0.7; background: rgba(255,255,255,0.03); padding: 0.6rem; border-radius: var(--radius-lg); border: 1px solid var(--border);">
+                                            <input type="checkbox" id="smart-upi-branding" checked style="width: 14px; height: 14px; accent-color: var(--accent-blue);"> Auto-Brand Detection
+                                        </label>
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                                            <input type="file" id="logo-upload" accept="image/png, image/jpeg" hidden>
+                                            <button id="upload-btn" class="btn btn-outline" style="border-style: dashed; padding: 0.75rem; font-size: 0.75rem;">
+                                                <span>+ Custom</span>
+                                            </button>
+                                            <button id="gallery-btn" class="btn btn-outline" style="background: rgba(0,209,255,0.1); border-color: rgba(0,209,255,0.2); padding: 0.75rem; font-size: 0.75rem;">
+                                                <span><i class="fas fa-images"></i> Gallery</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Unified Controls Card -->
+                            <div class="controls-card" style="margin-top: 1rem;">
+                                <div class="input-group" style="margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.25rem;">
+                                    <label class="label" style="margin-bottom: 1rem;">Style & Appearance</label>
+                                    <div class="grid-2" style="gap: 1.25rem;">
+                                        <div>
+                                            <label class="label" style="font-size: 0.6rem; opacity: 0.6; margin-bottom: 0.4rem; letter-spacing: 0.05em;">Dot Precision</label>
+                                            <select id="dot-style" class="textarea" style="height: auto; padding: 0.75rem; font-size: 0.8rem; min-height: auto;">
+                                                <option value="square">Square Precision</option>
+                                                <option value="dots">Modern Dots</option>
+                                                <option value="rounded">Smooth Rounded</option>
+                                                <option value="extra-rounded">Liquid</option>
+                                                <option value="classy">Premium Classy</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="label" style="font-size: 0.6rem; opacity: 0.6; margin-bottom: 0.4rem; letter-spacing: 0.05em;">Corner Geometry</label>
+                                            <select id="corner-style" class="textarea" style="height: auto; padding: 0.75rem; font-size: 0.8rem; min-height: auto;">
+                                                <option value="square">Sharp Square</option>
+                                                <option value="dot">Circular</option>
+                                                <option value="extra-rounded">Extra Smooth</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="input-group" style="margin-bottom: 0;">
+                                    <label class="label" style="margin-bottom: 1rem;">Designer Label</label>
+                                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                                        <div>
+                                            <label class="label" style="font-size: 0.55rem; opacity: 0.5; margin-bottom: 0.3rem; letter-spacing: 0.05em;">Label Text</label>
+                                            <input type="text" id="footer-text" class="textarea" style="height: auto; padding: 0.75rem; font-size: 0.8rem; min-height: auto;" placeholder="e.g. SCAN TO PAY">
+                                        </div>
+                                        <div>
+                                            <label class="label" style="font-size: 0.55rem; opacity: 0.5; margin-bottom: 0.3rem; letter-spacing: 0.05em;">Label Position</label>
+                                            <select id="label-position" class="textarea" style="height: auto; padding: 0.75rem; font-size: 0.8rem; min-height: auto;">
+                                                <option value="bottom">Bottom Position</option>
+                                                <option value="top">Top Position</option>
+                                            </select>
+                                        </div>
+                                        <div style="display: flex; gap: 1.25rem; padding: 0.25rem 0;">
+                                            <label class="label" style="display: flex; align-items: center; gap: 0.5rem; margin: 0; cursor: pointer; font-size: 0.7rem; opacity: 0.8;">
+                                                <input type="checkbox" id="show-label-icon" style="width: 14px; height: 14px; accent-color: var(--accent-blue);"> Show Icon
+                                            </label>
+                                            <label class="label" style="display: flex; align-items: center; gap: 0.5rem; margin: 0; cursor: pointer; font-size: 0.7rem; opacity: 0.8;">
+                                                <input type="checkbox" id="show-center-logo" checked style="width: 14px; height: 14px; accent-color: var(--accent-blue);"> Center Logo
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bento Features -->
+        <section class="features">
+            <div class="container">
+                <h2 class="gradient-text">Engineered for <br>Precision.</h2>
+                
+                <div class="bento-grid">
+                    <div class="bento-item large">
+                        <span class="feature-tag">Engine</span>
+                        <h3>Smart Detect™</h3>
+                        <p style="color: var(--text-secondary); margin-top: 1rem;">Intelligent content routing. Automatically identifies URLs, handles, and contacts.</p>
+                    </div>
+                    <div class="bento-item">
+                        <span class="feature-tag">Vector</span>
+                        <h3>Infinite Scale</h3>
+                        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Perfect for print with SVG.</p>
+                    </div>
+                    <div class="bento-item">
+                        <span class="feature-tag">Speed</span>
+                        <h3>Real-time</h3>
+                        <p style="color: var(--text-secondary); margin-top: 0.5rem;">Instant visual feedback.</p>
+                    </div>
+                    <div class="bento-item wide">
+                        <span class="feature-tag">Privacy</span>
+                        <h3>Local Generation</h3>
+                        <p style="color: var(--text-secondary); margin-top: 1rem;">Your data never leaves your device. Everything is processed on the client-side for maximum security.</p>
+                    </div>
+                    <div class="bento-item tall">
+                        <span class="feature-tag">Custom</span>
+                        <h3>Advanced Geometry</h3>
+                        <p style="color: var(--text-secondary); margin-top: 1rem;">Control every pixel of your QR code's appearance.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="padding: 100px 0; border-top: 1px solid var(--border); text-align: center;">
+        <div class="container">
+            <p style="color: var(--text-muted);">&copy; 2026 QR GEN PRO. ALL RIGHTS RESERVED.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
