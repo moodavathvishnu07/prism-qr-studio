@@ -210,24 +210,80 @@ h2 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; letter-spacing: -0.03e
     display: block;
 }
 
-.textarea {
+.textarea, .custom-select-trigger, input[type="text"] {
     width: 100%;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.02) !important;
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: 1rem;
-    color: white;
+    color: white !important;
     font-family: inherit;
-    font-size: 1rem;
-    resize: none;
-    min-height: 80px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.custom-select-trigger:hover {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.custom-select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.custom-options {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: 0;
+    background: #0a0a0a;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    z-index: 1000;
+    display: none;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+    backdrop-filter: blur(20px);
+}
+
+.custom-options.show {
+    display: block;
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.custom-option {
+    padding: 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
     transition: var(--transition);
 }
 
-.textarea:focus {
-    outline: none;
-    border-color: var(--accent-blue);
-    background: rgba(255, 255, 255, 0.02);
+.custom-option:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+.custom-option.selected {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* Hide Native Selects */
+select {
+    display: none;
 }
 
 /* Controls */

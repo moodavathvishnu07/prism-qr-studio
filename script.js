@@ -431,7 +431,63 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Start ---
+    // Custom Select Component System
+    function initCustomSelects() {
+        const selects = document.querySelectorAll('select');
+        
+        selects.forEach(select => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'custom-select-wrapper';
+            
+            const trigger = document.createElement('div');
+            trigger.className = 'custom-select-trigger';
+            trigger.innerHTML = `<span>${select.options[select.selectedIndex].text}</span><i class="fas fa-chevron-down"></i>`;
+            
+            const optionsContainer = document.createElement('div');
+            optionsContainer.className = 'custom-options';
+            
+            Array.from(select.options).forEach((opt, idx) => {
+                const customOption = document.createElement('div');
+                customOption.className = 'custom-option';
+                if (idx === select.selectedIndex) customOption.classList.add('selected');
+                customOption.textContent = opt.text;
+                customOption.dataset.value = opt.value;
+                
+                customOption.onclick = () => {
+                    select.value = opt.value;
+                    trigger.querySelector('span').textContent = opt.text;
+                    optionsContainer.querySelectorAll('.custom-option').forEach(o => o.classList.remove('selected'));
+                    customOption.classList.add('selected');
+                    optionsContainer.classList.remove('show');
+                    
+                    // Trigger change event for QR update
+                    select.dispatchEvent(new Event('change'));
+                };
+                
+                optionsContainer.appendChild(customOption);
+            });
+            
+            trigger.onclick = (e) => {
+                e.stopPropagation();
+                document.querySelectorAll('.custom-options').forEach(c => {
+                    if (c !== optionsContainer) c.classList.remove('show');
+                });
+                optionsContainer.classList.toggle('show');
+            };
+            
+            wrapper.appendChild(trigger);
+            wrapper.appendChild(optionsContainer);
+            select.parentNode.insertBefore(wrapper, select);
+        });
+        
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.custom-options').forEach(c => c.classList.remove('show'));
+        });
+    }
+
+    // --- Start ---
     initTemplates();
+    initCustomSelects(); // Universal Theme Patch
     qr.append(qrCanvas); // Initialize once
     
     // Initial Load - Set "Inverted Slate" as Default
