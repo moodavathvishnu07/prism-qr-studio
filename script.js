@@ -352,16 +352,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const item = document.createElement('div');
             item.className = 'gallery-item';
             item.style.cssText = `
-                background: rgba(255,255,255,0.05);
-                border: 1px solid var(--border);
+                background: rgba(255, 255, 255, 0.02);
+                border: 1px solid rgba(255, 255, 255, 0.08);
                 border-radius: var(--radius-lg);
-                padding: 1rem;
+                padding: 1.25rem;
                 cursor: pointer;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 0.5rem;
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                gap: 0.75rem;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             `;
             item.innerHTML = `
                 <img src="${logo.url}" style="width: 32px; height: 32px; object-fit: contain;">
